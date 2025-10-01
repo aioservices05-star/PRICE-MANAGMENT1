@@ -1,0 +1,217 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Currency model for managing different currencies and exchange rates
+model Currency {
+  id          String   @id @default(cuid())
+  code        String   @unique // USD, DZD, EUR, CNY
+  name        String   // US Dollar, Algerian Dinar, Euro, Chinese Yuan
+  symbol      String   // $, DA, €, ¥
+  exchangeRate Float   // Exchange rate relative to USD
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  cars        Car[]
+}
+
+// Car model for managing cars
+model Car {
+  id            String   @id @default(cuid())
+  brand         String   // Toyota, BMW, Mercedes, etc.
+  model         String   // Camry, X5, C-Class, etc.
+  year          Int      // 2024, 2023, etc.
+  color         String   // Red, Blue, Black, etc.
+  description   String?  // Long description text
+  priceUSD      Float    // Price in USD (base currency)
+  mileage       Int?     // Mileage in km
+  fuelType      String?  // Gasoline, Diesel, Electric, Hybrid
+  transmission  String?  // Automatic, Manual, CVT
+  engineSize    String?  // 2.0L, 3.5L, etc.
+  horsepower    Int?     // Horsepower
+  doors         Int?     // Number of doors
+  seats         Int?     // Number of seats
+  bodyType      String?  // Sedan, SUV, Coupe, Hatchback
+  roofType      String?  // None, Sunroof, Panoramic, Convertible, Hardtop
+  roofDetails   String?  // Additional roof details (manual, automatic, etc.)
+  seatMechanism String?  // Manual, Automatic, Electric, Power
+  condition     String?  // New, Used, Certified Pre-owned
+  vin           String?  // Vehicle Identification Number
+  licensePlate  String?  // License plate number
+  location      String?  // Location of the car
+  isAvailable   Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  quantity      Int      @default(1) // Available quantity
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  images        CarImage[]
+  videos        CarVideo[]
+  currency      Currency @relation(fields: [currencyId], references: [id])
+  currencyId    String
+  carBrand      CarBrand? @relation(fields: [carBrandId], references: [id])
+  carBrandId    String?
+  colorOption   ColorOption? @relation(fields: [colorOptionId], references: [id])
+  colorOptionId String?
+  modelTemplate CarModelTemplate? @relation(fields: [modelTemplateId], references: [id])
+  modelTemplateId String?
+  
+  @@map("cars")
+}
+
+// CarImage model for storing car images
+model CarImage {
+  id        String   @id @default(cuid())
+  carId     String
+  url       String   // URL or local path
+  altText   String?  // Alternative text for accessibility
+  isPrimary Boolean  @default(false) // Primary image for display
+  color     String?  // Color name for this image
+  order     Int      @default(0)    // Display order
+  createdAt DateTime @default(now())
+  
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  
+  @@map("car_images")
+}
+
+// CarVideo model for storing car videos
+model CarVideo {
+  id        String   @id @default(cuid())
+  carId     String
+  url       String   // Video URL or local path
+  title     String?  // Video title
+  description String? // Video description
+  thumbnail  String?  // Thumbnail URL
+  color     String?  // Color name for this video
+  duration   Int?     // Duration in seconds
+  order     Int      @default(0)    // Display order
+  createdAt DateTime @default(now())
+  
+  car       Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  
+  @@map("car_videos")
+}
+
+// CarBrand model for managing car brands
+model CarBrand {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  logo        String?  // Logo URL
+  description String?  // Brand description
+  country     String?  // Country of origin
+  website     String?  // Official website
+  flag        String?  // Flag image URL
+  order       Int      @default(0) // Display order
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  cars        Car[]
+  modelTemplates CarModelTemplate[]
+  
+  @@map("car_brands")
+}
+
+// CarModel template for managing car models with predefined options
+model CarModelTemplate {
+  id          String   @id @default(cuid())
+  brandId     String
+  name        String
+  description String?  // Model description
+  basePrice   Float    // Base price in USD
+  years       String   // Available years (comma-separated)
+  fuelTypes   String   // Available fuel types (comma-separated)
+  transmissions String // Available transmissions (comma-separated)
+  bodyTypes   String   // Available body types (comma-separated)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  brand       CarBrand @relation(fields: [brandId], references: [id])
+  cars        Car[]
+  
+  @@map("car_model_templates")
+}
+
+// Color options for cars
+model ColorOption {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  hexCode     String   // Hex color code
+  rgbCode     String?  // RGB values
+  order       Int      @default(0) // Display order
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  cars        Car[]
+  
+  @@map("color_options")
+}
+
+// User model for authentication and authorization
+model User {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  email         String?  @unique
+  passwordHash  String   // Hashed password
+  password      String?  // Plain text password (for display purposes)
+  fullName      String   // Full name for display
+  role          UserRole @default(USER)
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  createdBy     String?  // Admin who created this user
+  profileImage  String?  // URL to profile image
+  showProfileImage Boolean @default(false) // Show profile image in top bar
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  createdUsers  User[]   @relation("CreatedByUser")
+  creator       User?    @relation("CreatedByUser", fields: [createdBy], references: [id])
+  activityLogs  ActivityLog[]
+  
+  @@map("users")
+}
+
+// Activity log for tracking user actions
+model ActivityLog {
+  id          String        @id @default(cuid())
+  userId      String
+  action      String        // CREATE, UPDATE, DELETE, LOGIN, LOGOUT
+  entityType  String        // USER, CAR, BRAND, COLOR, etc.
+  entityId    String?       // ID of the affected entity
+  oldValues   Json?         // Previous values before update
+  newValues   Json?         // New values after update
+  ipAddress   String?       // User's IP address
+  userAgent   String?       // User's browser/device info
+  description String        // Human-readable description
+  createdAt   DateTime      @default(now())
+  
+  // Relations
+  user        User          @relation(fields: [userId], references: [id])
+  
+  @@map("activity_logs")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  VIEWER
+  CURRENCY_MANAGER
+  USER
+}

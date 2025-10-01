@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Design Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .flag-img {
+            width: 24px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <!-- Header Test -->
+        <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <!-- Left Section - Logo and Title -->
+                    <div class="flex items-center">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-blue-600 p-2 rounded-lg">
+                                <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-gray-900">نظام إدارة السيارات</h1>
+                                <p class="text-xs text-gray-500">Car Management System</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Section - Date, Time, Location -->
+                    <div class="hidden md:flex items-center">
+                        <div class="flex items-center space-x-4 text-sm text-gray-600 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                            <!-- Date -->
+                            <div class="flex items-center space-x-1">
+                                <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="font-medium">٣٠ سبتمبر ٢٠٢٤</span>
+                            </div>
+                            
+                            <div class="w-px h-4 bg-gray-300"></div>
+                            
+                            <!-- Time -->
+                            <div class="flex items-center space-x-1">
+                                <svg class="h-4 w-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span class="font-medium">٣:١٥ م</span>
+                            </div>
+                            
+                            <div class="w-px h-4 bg-gray-300"></div>
+                            
+                            <!-- Location -->
+                            <div class="flex items-center space-x-1 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded transition-colors">
+                                <img src="/flags/dz.png" alt="علم الجزائر" class="flag-img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Section - Actions and User -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Currency Selector -->
+                        <div class="flex items-center">
+                            <div class="relative">
+                                <select class="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
+                                    <option>دج DZD</option>
+                                    <option>$ USD</option>
+                                    <option>€ EUR</option>
+                                </select>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                    </svg>
+                                </div>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                    <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Actions Dropdown -->
+                        <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3">
+                            <span>الإجراءات</span>
+                            <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- User Profile Card -->
+                        <div class="flex items-center space-x-3 bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                            <!-- Profile Image -->
+                            <div class="relative">
+                                <img src="https://picsum.photos/seed/user/32/32.jpg" alt="صورة المستخدم" class="w-8 h-8 rounded-full object-cover border-2 border-blue-200 shadow-sm hover:border-blue-400 transition-colors cursor-pointer">
+                                <!-- Status indicator -->
+                                <div class="absolute bottom-0 right-0 w-2 h-2 rounded-full border-2 border-white bg-green-500"></div>
+                            </div>
+                            
+                            <!-- User Info -->
+                            <div class="hidden sm:block">
+                                <div class="text-sm font-medium text-gray-900">أحمد محمد</div>
+                                <div class="text-xs text-gray-500">ahmed.mohamed</div>
+                            </div>
+                            
+                            <!-- Role Badge -->
+                            <span class="hidden lg:inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border border-gray-300">
+                                <svg class="h-3 w-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                                <span>مسؤول</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="p-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">اختبار تصميم الشريط العلوي</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg">
+                            <h3 class="font-semibold text-blue-900 mb-2">✅ المميزات الجديدة:</h3>
+                            <ul class="list-disc list-inside text-blue-800 space-y-1">
+                                <li>تصميم احترافي منظم بثلاثة أقسام</li>
+                                <li>شعار مميز مع خلفية زرقاء</li>
+                                <li>عرض التاريخ والوقت مع أيقونات واضحة</li>
+                                <li>علم الدولة فقط بدون نص</li>
+                                <li>منتقي العملات المحسن</li>
+                                <li>بطاقة مستخدم أنيقة مع حالة النشاط</li>
+                                <li>قائمة منسدلة للإجراءات مع سهم صغير</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-4 bg-green-50 rounded-lg">
+                            <h3 class="font-semibold text-green-900 mb-2">🎯 التحسينات:</h3>
+                            <ul class="list-disc list-inside text-green-800 space-y-1">
+                                <li>استخدام الأعلام الحقيقية للدول</li>
+                                <li>تنسيق متوافق مع الشاشات المختلفة</li>
+                                <li>ألوان متناسقة واحترافية</li>
+                                <li>توزيع مساحات مناسب بين العناصر</li>
+                                <li>تجربة مستخدم سلسة وبديهية</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <h3 class="font-semibold text-gray-900 mb-2">📱 الاستجابة:</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700">
+                                <div class="text-center">
+                                    <div class="font-medium mb-1">شاشات كبيرة</div>
+                                    <div>جميع العناصر مرئية</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="font-medium mb-1">شاشات متوسطة</div>
+                                    <div>إخفاء بعض التفاصيل</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="font-medium mb-1">شاشات صغيرة</div>
+                                    <div>العناصر الأساسية فقط</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
